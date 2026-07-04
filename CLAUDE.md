@@ -7,6 +7,7 @@ This repository is a reusable collection of Claude Code rules for data-science a
 ## Repository layout
 
 - `.claude/rules/` contains the rule files distributed by this project.
+- `CLAUDE-RULES.md` contains the same rules consolidated into a single file; its section content must match the corresponding `.claude/rules/` file exactly.
 - `README.md` documents the collection for users and contributors.
 - `LICENSE` contains the MIT license.
 
@@ -28,4 +29,5 @@ When changing a rule:
 2. Check that instructions do not conflict with another rule.
 3. Verify that the rule describes observable behavior rather than vague preferences.
 4. Update the rule table in `README.md` if files are added, removed, or renamed.
-5. Check Markdown formatting and links before committing.
+5. Apply the same change to the matching section in `CLAUDE-RULES.md` so it stays in sync with `.claude/rules/`.
+6. Check Markdown formatting and links before committing.

@@ -33,7 +33,7 @@ Use these rules when working on data-science or quantitative-research code. Corr
 ## Data Leakage Prevention
 
 - Avoid look-ahead bias above all else.
-- Never use future returns, future volatility, future labels, or future availability information when constructing features.
+- Never use future returns, future labels, or future availability information when constructing features.
 - When editing target construction, rolling features, feature selection, train/validation/test splits, or evaluation logic, explicitly verify date boundaries.
 - Rolling features must use only information available up to the prediction date.
 - Forward targets must not overlap the training feature window unless explicitly intended and documented.
@@ -41,6 +41,7 @@ Use these rules when working on data-science or quantitative-research code. Corr
 - Do not tune hyperparameters using test-period performance.
 - Fit preprocessing and transformations only on the appropriate training data.
 - If date or information-availability logic is unclear, stop and explain the possible leakage risk before editing.
+- If any of the leakage patterns above are observed anywhere in code being read, reviewed, or touched — not only in code being newly written — stop and flag the specific risk before proceeding, even if fixing it is outside the current task's scope.
 
 ## Reproducibility
 
@@ -79,11 +80,11 @@ Use these rules when working on data-science or quantitative-research code. Corr
 
 - Keep feature construction and target construction separate.
 - Feature columns must not depend on target columns.
-- Name target columns with their forecast horizon, for example `IVOL_fwd_252`.
-- Give backward-looking features names that identify their window, for example `bf_IVOL_252` or `sf_UTIL_Z252`.
-- Do not mix baseline features and securities-lending features accidentally.
-- Preserve the distinction between `bf_*` baseline features and `sf_*` securities-lending features.
-- When adding a feature, specify whether it is baseline, securities-lending, market-level, or target-related.
+- Name target columns with their forecast horizon, for example `TARGET_fwd_252`.
+- Give backward-looking features names that identify their window, for example `bf_FEATURE_252` or `alt_FEATURE_Z252`.
+- Do not mix distinct feature families (for example baseline and alternative-data features) accidentally.
+- Preserve prefix-based distinctions between feature families, for example `bf_*` baseline features versus `alt_*` alternative-data features.
+- When adding a feature, specify which feature family it belongs to (for example baseline, alternative-data, market-level) and whether it is target-related.
 - Document the timestamp at which each feature becomes observable when it differs from the source event date.
 
 ## Evaluation Discipline
@@ -94,7 +95,7 @@ Use these rules when working on data-science or quantitative-research code. Corr
 - Before reporting improvement percentages, verify that both models were evaluated on the same rows and target values.
 - Compute evaluation metrics consistently across models.
 - Do not change metric definitions casually; make changes to MSE, MAE, QLIKE, or R-squared logic explicit.
-- For volatility targets, state whether metrics are computed on volatility or variance.
+- When a target admits multiple representations (for example level vs. log, or a transformed vs. untransformed scale), state which representation the metrics are computed on.
 - Use time-aware validation and an appropriate gap or embargo when labels overlap or information arrives with delay.
 - Report uncertainty or variation across periods when a single aggregate metric could conceal instability.
 
@@ -130,7 +131,7 @@ Use these rules when working on data-science or quantitative-research code. Corr
 
 - Do not treat small metric improvements as meaningful without checking robustness.
 - When reporting improvements, include absolute metric values and percentage improvement.
-- Check whether gains concentrate in particular years, volatility buckets, market-cap buckets, or short-stress buckets.
+- Check whether gains concentrate in particular years, market regimes, market-cap buckets, or stress periods.
 - Distinguish predictive performance from economic interpretation.
 - Do not claim causality from forecasting improvements.
 - Report negative and unstable results rather than selecting only favorable periods or specifications.

@@ -12,6 +12,6 @@ paths:
 - Before reporting improvement percentages, verify that both models were evaluated on the same rows and target values.
 - Compute evaluation metrics consistently across models.
 - Do not change metric definitions casually; make changes to MSE, MAE, QLIKE, or R-squared logic explicit.
-- For volatility targets, state whether metrics are computed on volatility or variance.
+- When a target admits multiple representations (for example level vs. log, or a transformed vs. untransformed scale), state which representation the metrics are computed on.
 - Use time-aware validation and an appropriate gap or embargo when labels overlap or information arrives with delay.
 - Report uncertainty or variation across periods when a single aggregate metric could conceal instability.
