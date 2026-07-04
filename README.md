@@ -4,6 +4,12 @@ Reusable Claude Code rules for data-science and quantitative-research projects w
 
 The rule set emphasizes point-in-time correctness, leakage prevention, reproducibility, disciplined evaluation, safe DataFrame operations, and honest interpretation. It also includes practical software-engineering guidance for readable, maintainable research code.
 
+## One-file quick start
+
+Open [`CLAUDE-RULES.md`](CLAUDE-RULES.md), copy the entire file, and paste it into your project's `CLAUDE.md`. It contains all 13 rules in one ready-to-use document.
+
+Use the individual files under `.claude/rules/` when you prefer path-scoped, modular rules.
+
 ## Included rules
 
 | Rule | Purpose |
@@ -57,6 +63,7 @@ Review and adapt the path scopes and domain-specific naming examples before usin
 |   `-- rules/
 |       `-- *.md
 |-- CLAUDE.md
+|-- CLAUDE-RULES.md
 |-- LICENSE
 `-- README.md
 ```
