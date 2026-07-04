@@ -6,9 +6,9 @@ The rule set emphasizes point-in-time correctness, leakage prevention, reproduci
 
 ## One-file quick start
 
-Open [`CLAUDE-RULES.md`](CLAUDE-RULES.md), copy the entire file, and paste it into your project's `CLAUDE.md`. It contains all 14 rules in one ready-to-use document.
+[`quant_research_guardrails.md`](quant_research_guardrails.md) is the whole rule set as a single rule: copy-paste it straight into your project's `CLAUDE.md` and every guardrail below applies immediately, with no setup and no separate files to wire up.
 
-Use the individual files under `rules/` when you prefer path-scoped, modular rules.
+Use the individual files under `rules/` when you prefer path-scoped, modular rules instead.
 
 ## Included rules
 
@@ -63,7 +63,7 @@ Review and adapt the path scopes and domain-specific naming examples before usin
 |-- rules/
 |   `-- *.md
 |-- CLAUDE.md
-|-- CLAUDE-RULES.md
+|-- quant_research_guardrails.md
 |-- LICENSE
 `-- README.md
 ```
