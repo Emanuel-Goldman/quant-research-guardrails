@@ -30,6 +30,16 @@ Use these rules when working on data-science or quantitative-research code. Corr
 - Split a function when its stages cannot be understood or tested independently.
 - Keep clever vectorization only when its correctness remains easy to inspect.
 
+## Function Docstrings
+
+- Every function should start with a short one-line docstring explaining what the function is for.
+- The docstring should describe the purpose of the function, not every implementation detail.
+- Keep docstrings short and useful.
+- Prefer one clear sentence.
+- Do not write long parameter explanations unless the function is complex or public-facing.
+- For private helper functions, still include a short one-line docstring.
+- If the function name is unclear, improve the function name rather than writing a long docstring.
+
 ## Data Leakage Prevention
 
 - Avoid look-ahead bias above all else.
@@ -47,6 +57,7 @@ Use these rules when working on data-science or quantitative-research code. Corr
 
 - Experiments must be reproducible.
 - Use fixed random seeds for model training, sampling, feature selection, and cross-validation when applicable.
+- Design experiments so the seed is a single, exposed parameter, allowing the full run to be repeated with a different seed to check stability.
 - Do not rely on hidden notebook state.
 - Make important experiment parameters explicit arguments or named configuration values, not buried literals.
 - Save enough metadata to reproduce each run: model name, feature set, target, train period, validation period, test period, gap, seed, and metric definitions.
@@ -86,6 +97,7 @@ Use these rules when working on data-science or quantitative-research code. Corr
 - Preserve prefix-based distinctions between feature families, for example `bf_*` baseline features versus `alt_*` alternative-data features.
 - When adding a feature, specify which feature family it belongs to (for example baseline, alternative-data, market-level) and whether it is target-related.
 - Document the timestamp at which each feature becomes observable when it differs from the source event date.
+- If any of the rules above are violated in code being read, reviewed, or touched — not only in code being newly written — notify the user in chat with the specific violation before proceeding, even if fixing it is outside the current task's scope.
 
 ## Evaluation Discipline
 

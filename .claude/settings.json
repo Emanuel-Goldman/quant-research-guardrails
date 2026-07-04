@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(grep -rn \"^See also\\\\|cross-reference\\\\|see \\\\`\" /home/emanuel/Projects/quant-research-guardrails/rules/)"
     ]
   }
 }

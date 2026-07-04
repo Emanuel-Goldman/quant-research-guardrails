@@ -14,3 +14,4 @@ paths:
 - Preserve prefix-based distinctions between feature families, for example `bf_*` baseline features versus `alt_*` alternative-data features.
 - When adding a feature, specify which feature family it belongs to (for example baseline, alternative-data, market-level) and whether it is target-related.
 - Document the timestamp at which each feature becomes observable when it differs from the source event date.
+- If any of the rules above are violated in code being read, reviewed, or touched — not only in code being newly written — notify the user in chat with the specific violation before proceeding, even if fixing it is outside the current task's scope.

@@ -6,9 +6,9 @@ The rule set emphasizes point-in-time correctness, leakage prevention, reproduci
 
 ## One-file quick start
 
-Open [`CLAUDE-RULES.md`](CLAUDE-RULES.md), copy the entire file, and paste it into your project's `CLAUDE.md`. It contains all 13 rules in one ready-to-use document.
+Open [`CLAUDE-RULES.md`](CLAUDE-RULES.md), copy the entire file, and paste it into your project's `CLAUDE.md`. It contains all 14 rules in one ready-to-use document.
 
-Use the individual files under `.claude/rules/` when you prefer path-scoped, modular rules.
+Use the individual files under `rules/` when you prefer path-scoped, modular rules.
 
 ## Included rules
 
@@ -17,6 +17,7 @@ Use the individual files under `.claude/rules/` when you prefer path-scoped, mod
 | `fail-fast.md` | Surface invalid assumptions and data problems immediately. |
 | `code-reuse.md` | Keep shared research logic in reusable functions and modules. |
 | `function-readability.md` | Make functions focused, explicit, and easy to verify. |
+| `function-docstrings.md` | Keep docstrings short, purposeful, and present on every function. |
 | `data-leakage.md` | Prevent look-ahead bias and test-set contamination. |
 | `reproducibility.md` | Make experiments repeatable from recorded inputs and settings. |
 | `experiment-logging.md` | Preserve run metadata, predictions, and comparable results. |
@@ -30,18 +31,18 @@ Use the individual files under `.claude/rules/` when you prefer path-scoped, mod
 
 ## Use in a project
 
-Copy the `.claude/rules` directory into the root of your project. Claude Code will discover the scoped Markdown rules there.
+Copy the `rules` directory into the root of your project. Claude Code will discover the scoped Markdown rules there.
 
 PowerShell:
 
 ```powershell
-Copy-Item -Recurse .claude\rules C:\path\to\your-project\.claude\rules
+Copy-Item -Recurse rules C:\path\to\your-project\rules
 ```
 
 Bash:
 
 ```bash
-cp -R .claude/rules /path/to/your-project/.claude/rules
+cp -R rules /path/to/your-project/rules
 ```
 
 Review and adapt the path scopes and domain-specific naming examples before using the rules in a different research setting.
@@ -59,9 +60,8 @@ Review and adapt the path scopes and domain-specific naming examples before usin
 
 ```text
 .
-|-- .claude/
-|   `-- rules/
-|       `-- *.md
+|-- rules/
+|   `-- *.md
 |-- CLAUDE.md
 |-- CLAUDE-RULES.md
 |-- LICENSE
