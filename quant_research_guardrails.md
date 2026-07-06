@@ -114,6 +114,14 @@ This is quantitative-research code. Correctness, point-in-time integrity, reprod
 - When a target admits multiple representations (for example level vs. log, or a transformed vs. untransformed scale), state which representation the metrics are computed on.
 - Use time-aware validation and an appropriate gap or embargo when labels overlap or information arrives with delay.
 - Report uncertainty or variation across periods when a single aggregate metric could conceal instability.
+- When computing an error metric such as MSE or QLIKE for each company or group, isolate the group first and call the same metric function used elsewhere directly on that subset:
+
+  ```python
+  df_comp = df[df["PERMNO"] == permno]
+  base_mse = mean_squared_error(df_comp[target_col], df_comp[pred_col])
+  ```
+
+  Do not hand-roll global per-row errors and aggregate them with `groupby(...).mean()`, even when the result is numerically equivalent. Prefer a small helper such as `company_mse(df, model, target_col, permno)` plus a loop over groups. This keeps each group calculation self-contained, reuses the pipeline's authoritative metric implementation, and is easier to audit. This is a sanctioned exception to the Performance and Memory preference for vectorized operations: it loops over groups, not rows.
 
 ## Notebook and Script Discipline
 
@@ -123,6 +131,21 @@ This is quantitative-research code. Correctness, point-in-time integrity, reprod
 - When moving code from notebooks to scripts, convert repeated cells into focused functions.
 - Keep notebooks short and centered on one analysis.
 - Restart the kernel and run all cells in order before treating notebook output as reproducible evidence.
+- Do not place multiple bare display expressions in one notebook cell and expect every result to render; only the final expression is displayed automatically:
+
+  ```python
+  companies_imp.head(20)  # Not displayed
+  companies_imp.tail(20)  # Displayed
+  ```
+
+  Put one bare display expression in each cell, or call `print(...)` or `IPython.display.display(...)` explicitly. Prefer `display(...)` when rich DataFrame formatting should be preserved:
+
+  ```python
+  from IPython.display import display
+
+  display(companies_imp.head(20))
+  display(companies_imp.tail(20))
+  ```
 
 ## Modeling Simplicity
 
