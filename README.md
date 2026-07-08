@@ -24,6 +24,7 @@ Use the individual files under `rules/` when you prefer path-scoped, modular rul
 | `dataframe-safety.md` | Avoid quiet pandas mutation, merge, and filtering errors. |
 | `feature-target-discipline.md` | Keep features, targets, horizons, and feature families distinct. |
 | `evaluation-discipline.md` | Enforce clean splits and apples-to-apples model comparisons. |
+| `notebook-setup.md` | Start notebooks with consistent imports and pandas display settings. |
 | `notebook-script-discipline.md` | Keep production logic independent of notebook state. |
 | `modeling-simplicity.md` | Test one modeling change at a time against simple baselines. |
 | `performance-memory.md` | Improve efficiency without obscuring correctness. |

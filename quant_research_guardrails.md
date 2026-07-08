@@ -123,6 +123,21 @@ This is quantitative-research code. Correctness, point-in-time integrity, reprod
 
   Do not hand-roll global per-row errors and aggregate them with `groupby(...).mean()`, even when the result is numerically equivalent. Prefer a small helper such as `company_mse(df, model, target_col, permno)` plus a loop over groups. This keeps each group calculation self-contained, reuses the pipeline's authoritative metric implementation, and is easier to audit. This is a sanctioned exception to the Performance and Memory preference for vectorized operations: it loops over groups, not rows.
 
+## Notebook Setup Cells
+
+- Start every research notebook with a setup section before any data loading, transformation, plotting, modeling, or analysis.
+- Put all imports in the first code cell unless an import is intentionally local to a function or optional dependency path.
+- Put pandas display settings immediately after the imports, using exactly:
+
+  ```python
+  pd.set_option("display.max_columns", 700)
+  pd.set_option("display.max_rows", 700)
+  pd.set_option("display.float_format", "{:.8f}".format)
+  ```
+
+- Do not scatter imports or notebook-wide display configuration across analysis cells; move them back to the setup section when editing existing notebooks.
+- Do not change notebook-wide display settings later in the notebook unless the cell explains why the temporary override is needed and restores or scopes the change.
+
 ## Notebook and Script Discipline
 
 - Use notebooks for exploration, plots, and interpretation, not hidden production logic.
