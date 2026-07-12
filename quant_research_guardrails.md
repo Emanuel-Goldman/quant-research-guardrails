@@ -143,9 +143,9 @@ This is quantitative-research code. Correctness, point-in-time integrity, reprod
 - Put pandas display settings immediately after the imports, using exactly:
 
   ```python
-  pd.set_option("display.max_columns", 700)
-  pd.set_option("display.max_rows", 700)
-  pd.set_option("display.float_format", "{:.8f}".format)
+  pd.set_option("display.max_columns", None)   # show all columns
+  pd.set_option("display.width", None)         # don't wrap to terminal width
+  pd.set_option("display.max_colwidth", None)  # don't truncate cell contents
   ```
 
 - Do not scatter imports or notebook-wide display configuration across analysis cells; move them back to the setup section when editing existing notebooks.
