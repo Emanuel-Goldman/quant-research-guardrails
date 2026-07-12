@@ -32,6 +32,7 @@ Use the individual files under `rules/` when you prefer path-scoped, modular rul
 | `evaluation-discipline.md` | Enforce clean splits and apples-to-apples model comparisons. |
 | `notebook-setup.md` | Start notebooks with consistent imports and pandas display settings. |
 | `notebook-script-discipline.md` | Keep production logic independent of notebook state. |
+| `latex-compilation.md` | Build LaTeX PDFs through the repo script and clean generated artifacts. |
 | `modeling-simplicity.md` | Test one modeling change at a time against simple baselines. |
 | `performance-memory.md` | Improve efficiency without obscuring correctness. |
 | `research-interpretation.md` | Separate robust predictive evidence from causal claims. |
