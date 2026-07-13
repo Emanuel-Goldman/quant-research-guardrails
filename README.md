@@ -27,6 +27,7 @@ Use the individual files under `rules/` when you prefer path-scoped, modular rul
 | `reproducibility.md` | Make experiments repeatable from recorded inputs and settings. |
 | `experiment-logging.md` | Preserve run metadata, predictions, and comparable results. |
 | `research-notes.md` | Keep a durable record of research conclusions, decisions, and their rationale. |
+| `findings-report.md` | Write decision-oriented quantitative findings reports without overclaiming. |
 | `dataframe-safety.md` | Avoid quiet pandas mutation, merge, and filtering errors. |
 | `feature-target-discipline.md` | Keep features, targets, horizons, and feature families distinct. |
 | `evaluation-discipline.md` | Enforce clean splits and apples-to-apples model comparisons. |
