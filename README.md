@@ -1,12 +1,17 @@
 # Quant Research Guardrails
 
-Reusable Claude Code rules for data-science and quantitative-research projects where silent errors can be more dangerous than obvious failures.
+Reusable Claude Code and Codex rules for data-science and quantitative-research projects where silent errors can be more dangerous than obvious failures.
 
 The rule set emphasizes point-in-time correctness, leakage prevention, reproducibility, disciplined evaluation, safe DataFrame operations, and honest interpretation. It also includes practical software-engineering guidance for readable, maintainable research code.
 
 ## One-file quick start
 
-[`quant_research_guardrails.md`](quant_research_guardrails.md) is the whole rule set as a single rule: copy-paste it straight into your project's `CLAUDE.md` and every guardrail below applies immediately, with no setup and no separate files to wire up.
+[`quant_research_guardrails.md`](quant_research_guardrails.md) is the whole rule set as a single instruction file.
+
+- Claude Code users can copy-paste it into a project's `CLAUDE.md`.
+- Codex users can copy-paste it into a project's `AGENTS.md`.
+
+Every guardrail below then applies immediately, with no setup and no separate files to wire up.
 
 Use the individual files under `rules/` when you prefer path-scoped, modular rules instead.
 
@@ -21,17 +26,20 @@ Use the individual files under `rules/` when you prefer path-scoped, modular rul
 | `data-leakage.md` | Prevent look-ahead bias and test-set contamination. |
 | `reproducibility.md` | Make experiments repeatable from recorded inputs and settings. |
 | `experiment-logging.md` | Preserve run metadata, predictions, and comparable results. |
+| `research-notes.md` | Keep a durable record of research conclusions, decisions, and their rationale. |
 | `dataframe-safety.md` | Avoid quiet pandas mutation, merge, and filtering errors. |
 | `feature-target-discipline.md` | Keep features, targets, horizons, and feature families distinct. |
 | `evaluation-discipline.md` | Enforce clean splits and apples-to-apples model comparisons. |
-| `notebook-script-discipline.md` | Keep production logic independent of notebook state. |
+| `notebook-setup.md` | Start notebooks with consistent imports and pandas display settings. |
+| `notebook-script-discipline.md` | Keep reusable logic in scripts while recording every experiment and result in a visible notebook. |
+| `latex-compilation.md` | Build LaTeX PDFs through the repo script and clean generated artifacts. |
 | `modeling-simplicity.md` | Test one modeling change at a time against simple baselines. |
 | `performance-memory.md` | Improve efficiency without obscuring correctness. |
 | `research-interpretation.md` | Separate robust predictive evidence from causal claims. |
 
 ## Use in a project
 
-Copy the `rules` directory into the root of your project. Claude Code will discover the scoped Markdown rules there.
+For modular use, copy the `rules` directory into the root of your project. Claude Code users can use those scoped Markdown rules directly. Codex users should keep the combined guidance in `AGENTS.md` unless their Codex setup explicitly supports a separate rules directory.
 
 PowerShell:
 
@@ -62,6 +70,7 @@ Review and adapt the path scopes and domain-specific naming examples before usin
 .
 |-- rules/
 |   `-- *.md
+|-- AGENTS.md
 |-- CLAUDE.md
 |-- quant_research_guardrails.md
 |-- LICENSE

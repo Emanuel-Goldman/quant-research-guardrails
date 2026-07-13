@@ -79,6 +79,19 @@ This is quantitative-research code. Correctness, point-in-time integrity, reprod
 - Include a stable run identifier that links outputs and metadata.
 - Avoid overwriting old results unless explicitly requested.
 
+## Research Notes
+
+- Maintain a project-level `RESEARCH_NOTES.md` as the durable record of the research process; create it when research work begins if it does not exist.
+- Update the notes throughout the work, not only when the analysis or coding task is finished.
+- Record every material research conclusion and every decision that affects the experiment, including data selection, sample construction, features, targets, splits, metrics, models, robustness checks, and interpretation.
+- Record design decisions made while writing or reviewing code even when the current task is about another part of the project.
+- Record research or experiment decisions supplied by the user in chat as soon as they become applicable to the project.
+- For each entry, state the decision or conclusion, the reason for it, and the evidence, constraint, or tradeoff that supports it; include rejected alternatives when they materially explain the choice.
+- Use dated, concise entries and identify the affected experiment, file, or component when useful.
+- Distinguish confirmed conclusions and adopted decisions from hypotheses, open questions, and tentative ideas.
+- Preserve prior entries as research history; correct or supersede them with a new entry instead of silently rewriting the record.
+- Do not put secrets, credentials, or unnecessary sensitive data in the notes.
+
 ## DataFrame Safety
 
 - Avoid ambiguous chained assignment in pandas.
@@ -114,15 +127,69 @@ This is quantitative-research code. Correctness, point-in-time integrity, reprod
 - When a target admits multiple representations (for example level vs. log, or a transformed vs. untransformed scale), state which representation the metrics are computed on.
 - Use time-aware validation and an appropriate gap or embargo when labels overlap or information arrives with delay.
 - Report uncertainty or variation across periods when a single aggregate metric could conceal instability.
+- When computing an error metric such as MSE or QLIKE for each company or group, isolate the group first and call the same metric function used elsewhere directly on that subset:
+
+  ```python
+  df_comp = df[df["PERMNO"] == permno]
+  base_mse = mean_squared_error(df_comp[target_col], df_comp[pred_col])
+  ```
+
+  Do not hand-roll global per-row errors and aggregate them with `groupby(...).mean()`, even when the result is numerically equivalent. Prefer a small helper such as `company_mse(df, model, target_col, permno)` plus a loop over groups. This keeps each group calculation self-contained, reuses the pipeline's authoritative metric implementation, and is easier to audit. This is a sanctioned exception to the Performance and Memory preference for vectorized operations: it loops over groups, not rows.
+
+## Notebook Setup Cells
+
+- Start every research notebook with a setup section before any data loading, transformation, plotting, modeling, or analysis.
+- Put all imports in the first code cell unless an import is intentionally local to a function or optional dependency path.
+- Put pandas display settings immediately after the imports, using exactly:
+
+  ```python
+  pd.set_option("display.max_columns", None)   # show all columns
+  pd.set_option("display.width", None)         # don't wrap to terminal width
+  pd.set_option("display.max_colwidth", None)  # don't truncate cell contents
+  ```
+
+- Do not scatter imports or notebook-wide display configuration across analysis cells; move them back to the setup section when editing existing notebooks.
+- Do not change notebook-wide display settings later in the notebook unless the cell explains why the temporary override is needed and restores or scopes the change.
 
 ## Notebook and Script Discipline
 
 - Use notebooks for exploration, plots, and interpretation, not hidden production logic.
 - Keep important logic in `.py` files rather than only in notebook cells.
+- Run every main research experiment from a notebook that the user can inspect; do not run an experiment only in a shell, REPL, temporary script, or agent-only tool session and then use its results.
+- Keep the experiment's inputs, configuration, execution, outputs, and any result used in analysis, decisions, research notes, or chat visible in the saved notebook.
+- Reusable logic may live in importable `.py` modules, but the notebook must call it explicitly and retain the outputs needed to audit each conclusion.
+- Small private diagnostic checks are allowed only to understand the code or data and decide what test to propose next. Do not treat their outputs as experimental evidence, use them to justify a conclusion, or report them as results; rerun any relevant check in the notebook before using its result.
+- When asked to run, compare, evaluate, or test a research experiment, add and execute it in the notebook and save the notebook with its outputs.
+- If a main experiment cannot be executed and recorded in a notebook, stop and explain the limitation before using or reporting any result.
 - Do not rely on variables created by running previous cells in an undocumented order.
 - When moving code from notebooks to scripts, convert repeated cells into focused functions.
 - Keep notebooks short and centered on one analysis.
 - Restart the kernel and run all cells in order before treating notebook output as reproducible evidence.
+- Do not place multiple bare display expressions in one notebook cell and expect every result to render; only the final expression is displayed automatically:
+
+  ```python
+  companies_imp.head(20)  # Not displayed
+  companies_imp.tail(20)  # Displayed
+  ```
+
+  Put one bare display expression in each cell, or call `print(...)` or `IPython.display.display(...)` explicitly. Prefer `display(...)` when rich DataFrame formatting should be preserved:
+
+  ```python
+  from IPython.display import display
+
+  display(companies_imp.head(20))
+  display(companies_imp.tail(20))
+  ```
+
+## LaTeX PDF Compilation
+
+- Build LaTeX PDFs with `./build_summary_pdf.sh <file.tex>` from the `Cross-Sectional-Return-Prediction` folder.
+- With no argument, the script builds `summary/literature-review.tex`.
+- Use `tectonic` as the LaTeX engine; it runs BibTeX and repeats the passes needed for citations and `\ref` cross-references in one command.
+- If no LaTeX engine is present, install `tectonic` with `conda install -y -n base -c conda-forge tectonic` before compiling.
+- Compile a fragment, meaning a `.tex` file with no `\documentclass`, by wrapping it in a standalone document that loads its packages and `\bibliography`; use the wrapper generated by the script rather than editing the fragment into a full document.
+- Write the PDF next to the source `.tex` file.
+- After compilation, delete generated wrappers and auxiliary files such as `.aux`, `.log`, `.bbl`, `.blg`, and `.out`; keep only the `.pdf`.
 
 ## Modeling Simplicity
 
