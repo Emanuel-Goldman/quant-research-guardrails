@@ -31,7 +31,7 @@ Use the individual files under `rules/` when you prefer path-scoped, modular rul
 | `feature-target-discipline.md` | Keep features, targets, horizons, and feature families distinct. |
 | `evaluation-discipline.md` | Enforce clean splits and apples-to-apples model comparisons. |
 | `notebook-setup.md` | Start notebooks with consistent imports and pandas display settings. |
-| `notebook-script-discipline.md` | Keep production logic independent of notebook state. |
+| `notebook-script-discipline.md` | Keep reusable logic in scripts while recording every experiment and result in a visible notebook. |
 | `latex-compilation.md` | Build LaTeX PDFs through the repo script and clean generated artifacts. |
 | `modeling-simplicity.md` | Test one modeling change at a time against simple baselines. |
 | `performance-memory.md` | Improve efficiency without obscuring correctness. |
